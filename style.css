@@ -1,0 +1,229 @@
+/* ===================================================
+   ANNA HORZEN — style.css  v2
+   Pure black · White · Blue-grey accent
+   Cormorant Garamond + DM Mono
+   =================================================== */
+
+/* --- RESET ---------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg:         #000000;
+  --text:       #ffffff;
+  --text-dim:   #888880;
+  --accent:     #7e93a0;   /* blue-grey */
+  --accent-dim: #4a5c66;
+  --border:     #1c1c1c;
+  --gap:        3px;
+  --nav-h:      56px;
+
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-mono:  'DM Mono', monospace;
+}
+
+html { font-size: 16px; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* --- HEADER --------------------------------------- */
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(1.25rem, 4vw, 2.5rem);
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.wordmark {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  transition: color 0.2s;
+}
+.wordmark:hover { color: var(--accent); }
+
+.site-nav {
+  display: flex;
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+.nav-link {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  transition: color 0.2s;
+}
+.nav-link:hover { color: var(--text); }
+.nav-link--active { color: var(--accent); }
+
+/* --- GRID PAGES ----------------------------------- */
+.grid-main {
+  padding-top: var(--nav-h);
+}
+
+/* Auto-height masonry columns — images display at natural proportions */
+.masonry-grid {
+  columns: 4;
+  column-gap: var(--gap);
+  padding: var(--gap);
+}
+
+.grid-cell {
+  break-inside: avoid;
+  margin-bottom: var(--gap);
+  overflow: hidden;
+  background: #0a0a0a;
+  cursor: pointer;
+  display: block;
+}
+
+.grid-cell img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: opacity 0.35s ease, transform 0.5s cubic-bezier(0.25,0.1,0.25,1);
+  opacity: 0.92;
+}
+
+.grid-cell:hover img {
+  opacity: 1;
+  transform: scale(1.03);
+}
+
+/* --- ABOUT PAGE ----------------------------------- */
+.about-main {
+  min-height: 100svh;
+  padding-top: var(--nav-h);
+  display: flex;
+  align-items: center;
+}
+
+.about-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: calc(100svh - var(--nav-h));
+}
+
+.about-image-wrap {
+  overflow: hidden;
+  background: #0a0a0a;
+  max-height: calc(100svh - var(--nav-h));
+}
+
+.about-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(20%);
+}
+
+.about-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+  padding: clamp(3rem, 8vw, 6rem) clamp(2rem, 6vw, 5rem);
+}
+
+.about-name {
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.about-name em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.about-bio {
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  font-weight: 300;
+  line-height: 1.8;
+  color: #ccc;
+  max-width: 480px;
+}
+
+.about-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.contact-link {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  color: var(--text-dim);
+  transition: color 0.2s;
+}
+.contact-link:hover { color: var(--accent); }
+
+/* --- PAGE FADE ------------------------------------ */
+body {
+  animation: fade 0.3s ease forwards;
+}
+@keyframes fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* --- RESPONSIVE ----------------------------------- */
+@media (max-width: 1024px) {
+  .masonry-grid {
+    columns: 3;
+  }
+}
+
+@media (max-width: 768px) {
+  .masonry-grid {
+    columns: 2;
+  }
+
+  .about-layout {
+    grid-template-columns: 1fr;
+  }
+  .about-image-wrap {
+    height: 50svh;
+    max-height: 50svh;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-nav { gap: 1.25rem; }
+
+  .masonry-grid {
+    columns: 2;
+  }
+}
