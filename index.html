@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photography — Anna Horzen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="index.html" class="wordmark">Anna Horzen</a>
+    <nav class="site-nav">
+      <a href="index.html" class="nav-link nav-link--active">Photography</a>
+      <a href="projections.html" class="nav-link">Projections</a>
+      <a href="about.html" class="nav-link">About</a>
+    </nav>
+  </header>
+
+  <main class="grid-main">
+    <div class="masonry-grid">
+
+      <figure class="grid-cell" onclick="openLightbox(this)">
+        <img src="images/photo-1.png" alt="" />
+      </figure>
+      <figure class="grid-cell" onclick="openLightbox(this)">
+        <img src="images/photo-2.png" alt="" />
+      </figure>
+      <figure class="grid-cell" onclick="openLightbox(this)">
+        <img src="images/photo-3.png" alt="" />
+      </figure>
+      <figure class="grid-cell" onclick="openLightbox(this)">
+        <img src="images/photo-4.png" alt="" />
+      </figure>
+      <figure class="grid-cell" onclick="openLightbox(this)">
+        <img src="images/photo-5.png" alt="" />
+      </figure>
+      <figure class="grid-cell" onclick="openLightbox(this)">
+        <img src="images/photo-6.png" alt="" />
+      </figure>
+      <figure class="grid-cell" onclick="openLightbox(this)">
+        <img src="images/photo-7.png" alt="" />
+      </figure>
+      <figure class="grid-cell" onclick="openLightbox(this)">
+        <img src="images/photo-8.png" alt="" />
+      </figure>
+      <figure class="grid-cell" onclick="openLightbox(this)">
+        <img src="images/photo-9.png" alt="" />
+      </figure>
+      <figure class="grid-cell" onclick="openLightbox(this)">
+        <img src="images/photo-10.png" alt="" />
+      </figure>
+      <figure class="grid-cell" onclick="openLightbox(this)">
+        <img src="images/photo-11.png" alt="" />
+      </figure>
+      <figure class="grid-cell" onclick="openLightbox(this)">
+        <img src="images/photo-12.png" alt="" />
+      </figure>
+      <figure class="grid-cell" onclick="openLightbox(this)">
+        <img src="images/photo-13.png" alt="" />
+      </figure>
+      <figure class="grid-cell" onclick="openLightbox(this)">
+        <img src="images/photo-14.png" alt="" />
+      </figure>
+      <figure class="grid-cell" onclick="openLightbox(this)">
+        <img src="images/photo-15.png" alt="" />
+      </figure>
+      <figure class="grid-cell" onclick="openLightbox(this)">
+        <img src="images/photo-16.png" alt="" />
+      </figure>
+
+    </div>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">×</button>
+    <button class="lightbox-prev" onclick="event.stopPropagation(); shiftImage(-1)">&#8592;</button>
+    <button class="lightbox-next" onclick="event.stopPropagation(); shiftImage(1)">&#8594;</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="" onclick="event.stopPropagation()" />
+  </div>
+
+  <script>
+    const cells = Array.from(document.querySelectorAll('.grid-cell'));
+    let current = 0;
+
+    function openLightbox(el) {
+      current = cells.indexOf(el);
+      const src = el.querySelector('img').src;
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function shiftImage(dir) {
+      current = (current + dir + cells.length) % cells.length;
+      document.getElementById('lightbox-img').src = cells[current].querySelector('img').src;
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') shiftImage(1);
+      if (e.key === 'ArrowLeft') shiftImage(-1);
+    });
+  </script>
+
+</body>
+</html>
