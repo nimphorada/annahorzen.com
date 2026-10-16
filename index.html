@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Projections — Anna Horzen</title>
+  <title>Design — Anna Horzen</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
@@ -14,7 +14,8 @@
   <header class="site-header">
     <a href="index.html" class="wordmark">Anna Horzen</a>
     <nav class="site-nav">
-      <a href="index.html" class="nav-link nav-link--active">Projections</a>
+      <a href="index.html" class="nav-link nav-link--active">Design</a>
+      <a href="productions.html" class="nav-link">Productions</a>
       <a href="photography.html" class="nav-link">Photography</a>
       <a href="about.html" class="nav-link">About</a>
     </nav>
@@ -23,29 +24,47 @@
   <main class="grid-main">
     <div class="masonry-grid">
 
-      <figure class="grid-cell" onclick="openLightbox(this)">
-        <img src="images/proj-01.jpg" alt="" />
+      <!-- To edit captions: change data-title (main line) and data-subtitle (smaller line).
+           Leave both empty ("") to show no caption for that image. -->
+      <figure class="grid-cell" onclick="openLightbox(this)"
+              data-title="Title 01"
+              data-subtitle="Production · Venue, Year">
+        <img src="images/proj-01.jpg" alt="Title 01" />
       </figure>
-      <figure class="grid-cell" onclick="openLightbox(this)">
-        <img src="images/proj-02.jpg" alt="" />
+      <figure class="grid-cell" onclick="openLightbox(this)"
+              data-title="Title 02"
+              data-subtitle="Production · Venue, Year">
+        <img src="images/proj-02.jpg" alt="Title 02" />
       </figure>
-      <figure class="grid-cell" onclick="openLightbox(this)">
-        <img src="images/proj-03.jpg" alt="" />
+      <figure class="grid-cell" onclick="openLightbox(this)"
+              data-title="Title 03"
+              data-subtitle="Production · Venue, Year">
+        <img src="images/proj-03.jpg" alt="Title 03" />
       </figure>
-      <figure class="grid-cell" onclick="openLightbox(this)">
-        <img src="images/proj-04.jpg" alt="" />
+      <figure class="grid-cell" onclick="openLightbox(this)"
+              data-title="Title 04"
+              data-subtitle="Production · Venue, Year">
+        <img src="images/proj-04.jpg" alt="Title 04" />
       </figure>
-      <figure class="grid-cell" onclick="openLightbox(this)">
-        <img src="images/proj-05.jpg" alt="" />
+      <figure class="grid-cell" onclick="openLightbox(this)"
+              data-title="Title 05"
+              data-subtitle="Production · Venue, Year">
+        <img src="images/proj-05.jpg" alt="Title 05" />
       </figure>
-      <figure class="grid-cell" onclick="openLightbox(this)">
-        <img src="images/proj-06.jpg" alt="" />
+      <figure class="grid-cell" onclick="openLightbox(this)"
+              data-title="Title 06"
+              data-subtitle="Production · Venue, Year">
+        <img src="images/proj-06.jpg" alt="Title 06" />
       </figure>
-      <figure class="grid-cell" onclick="openLightbox(this)">
-        <img src="images/proj-07.jpg" alt="" />
+      <figure class="grid-cell" onclick="openLightbox(this)"
+              data-title="Title 07"
+              data-subtitle="Production · Venue, Year">
+        <img src="images/proj-07.jpg" alt="Title 07" />
       </figure>
-      <figure class="grid-cell" onclick="openLightbox(this)">
-        <img src="images/proj-08.jpg" alt="" />
+      <figure class="grid-cell" onclick="openLightbox(this)"
+              data-title="Title 08"
+              data-subtitle="Production · Venue, Year">
+        <img src="images/proj-08.jpg" alt="Title 08" />
       </figure>
 
     </div>
@@ -56,17 +75,35 @@
     <button class="lightbox-close" onclick="closeLightbox()">×</button>
     <button class="lightbox-prev" onclick="event.stopPropagation(); shiftImage(-1)">&#8592;</button>
     <button class="lightbox-next" onclick="event.stopPropagation(); shiftImage(1)">&#8594;</button>
-    <img class="lightbox-img" id="lightbox-img" src="" alt="" onclick="event.stopPropagation()" />
+    <figure class="lightbox-figure" onclick="event.stopPropagation()">
+      <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+      <figcaption class="lightbox-caption" id="lightbox-caption">
+        <span class="lightbox-title" id="lightbox-title"></span>
+        <span class="lightbox-subtitle" id="lightbox-subtitle"></span>
+      </figcaption>
+    </figure>
   </div>
 
   <script>
     const cells = Array.from(document.querySelectorAll('.grid-cell'));
     let current = 0;
 
+    // Shows the image plus its data-title / data-subtitle (if any)
+    function showImage(i) {
+      const cell = cells[i];
+      const img = cell.querySelector('img');
+      const title = cell.dataset.title || '';
+      const subtitle = cell.dataset.subtitle || '';
+      document.getElementById('lightbox-img').src = img.src;
+      document.getElementById('lightbox-img').alt = title;
+      document.getElementById('lightbox-title').textContent = title;
+      document.getElementById('lightbox-subtitle').textContent = subtitle;
+      document.getElementById('lightbox-caption').hidden = !(title || subtitle);
+    }
+
     function openLightbox(el) {
       current = cells.indexOf(el);
-      const src = el.querySelector('img').src;
-      document.getElementById('lightbox-img').src = src;
+      showImage(current);
       document.getElementById('lightbox').classList.add('active');
       document.body.style.overflow = 'hidden';
     }
@@ -78,10 +115,11 @@
 
     function shiftImage(dir) {
       current = (current + dir + cells.length) % cells.length;
-      document.getElementById('lightbox-img').src = cells[current].querySelector('img').src;
+      showImage(current);
     }
 
     document.addEventListener('keydown', (e) => {
+      if (!document.getElementById('lightbox').classList.contains('active')) return;
       if (e.key === 'Escape') closeLightbox();
       if (e.key === 'ArrowRight') shiftImage(1);
       if (e.key === 'ArrowLeft') shiftImage(-1);
