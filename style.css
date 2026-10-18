@@ -275,34 +275,36 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .lightbox-next:hover { color: #fff; }
 
 
-/* --- DESIGN PAGE: TEXT ON IMAGES ------------------ */
-.cell-info {
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
+/* --- DESIGN PAGE SECTIONS ------------------------ */
+.design-section + .design-section {
+  border-top: 1px solid var(--border);
+}
+
+.section-header {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
-  padding: clamp(2rem, 4vw, 3rem) clamp(1rem, 2.5vw, 1.5rem) clamp(1rem, 2.5vw, 1.5rem);
-  background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0));
-  pointer-events: none;
+  gap: 0.6rem;
+  padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.25rem, 4vw, 2.5rem) clamp(1.5rem, 3vw, 2.25rem);
 }
-.cell-title {
+
+.section-title {
   font-family: var(--font-serif);
-  font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+  font-size: clamp(1.8rem, 4vw, 3rem);
   font-weight: 300;
   font-style: italic;
-  line-height: 1.15;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
   color: var(--text);
-  transition: color 0.2s;
 }
-.grid-cell:hover .cell-title { color: var(--accent); }
-.cell-subtitle {
+
+.section-subtitle {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   font-weight: 300;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.65);
+  line-height: 1.8;
+  color: var(--accent);
 }
 
 /* Small play marker on video items */
@@ -325,6 +327,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   transition: opacity 0.2s;
 }
 .grid-cell:hover .play-badge { opacity: 0; }
+.lightbox-prev[hidden], .lightbox-next[hidden] { display: none; }
 
 /* --- LIGHTBOX CAPTION + VIDEO --------------------- */
 .lightbox-figure {

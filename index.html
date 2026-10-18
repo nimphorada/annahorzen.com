@@ -20,78 +20,79 @@
     </nav>
   </header>
 
-  <main class="grid-main">
-    <div class="masonry-grid">
+  <main class="grid-main design-main">
 
-      <!--
-        HOW TO ADD ITEMS
-        data-title    = main line (shown on the image and in the lightbox)
-        data-subtitle = smaller line underneath
-        Leave both as "" to show no text on that item.
+    <!--
+      HOW THIS PAGE WORKS
+      The page is a stack of sections. Each section = a title, a subtitle, then a grid of photos/videos.
+      To add a section, copy everything from <section class="design-section"> to </section>
+      and paste it where you want it. Sections appear in the order they're written.
+      In the lightbox, the arrows move through the items in that section only.
 
-        IMAGE:
-        <figure class="grid-cell" data-title="Title" data-subtitle="Production · Venue, Year">
-          <img src="images/your-image.jpg" alt="Title" />
+      ITEMS YOU CAN PUT IN A SECTION'S GRID:
+
+      PHOTO:
+        <figure class="grid-cell">
+          <img src="images/your-image.jpg" alt="" />
         </figure>
 
-        VIDEO FILE (stored in your repo). Plays silently on hover; opens with sound in the lightbox.
-        The poster is the still image shown before it plays. Always include one.
-        <figure class="grid-cell" data-title="Title" data-subtitle="Production · Venue, Year">
+      VIDEO FILE (stored in your repo, MP4). Plays silently on hover; opens with sound.
+      The poster is the still frame shown before it plays. Always include one.
+        <figure class="grid-cell">
           <video src="videos/your-video.mp4" poster="images/your-video-poster.jpg"
                  muted loop playsinline preload="metadata"></video>
         </figure>
 
-        VIMEO / YOUTUBE (hosted elsewhere). The image is the thumbnail shown in the grid.
+      VIMEO / YOUTUBE. The image is the thumbnail shown in the grid.
         Vimeo:   data-embed="https://player.vimeo.com/video/123456789"
         YouTube: data-embed="https://www.youtube.com/embed/VIDEO_ID"
-        <figure class="grid-cell" data-embed="https://player.vimeo.com/video/123456789"
-                data-title="Title" data-subtitle="Production · Venue, Year">
-          <img src="images/your-thumbnail.jpg" alt="Title" />
+        <figure class="grid-cell" data-embed="https://player.vimeo.com/video/123456789">
+          <img src="images/your-thumbnail.jpg" alt="" />
         </figure>
-      -->
+    -->
 
-      <figure class="grid-cell"
-              data-title="Title 01"
-              data-subtitle="Production · Venue, Year">
-        <img src="images/proj-01.jpg" alt="Title 01" />
-      </figure>
-      <figure class="grid-cell"
-              data-title="Title 02"
-              data-subtitle="Production · Venue, Year">
-        <img src="images/proj-02.jpg" alt="Title 02" />
-      </figure>
-      <figure class="grid-cell"
-              data-title="Title 03"
-              data-subtitle="Production · Venue, Year">
-        <img src="images/proj-03.jpg" alt="Title 03" />
-      </figure>
-      <figure class="grid-cell"
-              data-title="Title 04"
-              data-subtitle="Production · Venue, Year">
-        <img src="images/proj-04.jpg" alt="Title 04" />
-      </figure>
-      <figure class="grid-cell"
-              data-title="Title 05"
-              data-subtitle="Production · Venue, Year">
-        <img src="images/proj-05.jpg" alt="Title 05" />
-      </figure>
-      <figure class="grid-cell"
-              data-title="Title 06"
-              data-subtitle="Production · Venue, Year">
-        <img src="images/proj-06.jpg" alt="Title 06" />
-      </figure>
-      <figure class="grid-cell"
-              data-title="Title 07"
-              data-subtitle="Production · Venue, Year">
-        <img src="images/proj-07.jpg" alt="Title 07" />
-      </figure>
-      <figure class="grid-cell"
-              data-title="Title 08"
-              data-subtitle="Production · Venue, Year">
-        <img src="images/proj-08.jpg" alt="Title 08" />
-      </figure>
+    <section class="design-section">
+      <header class="section-header">
+        <h2 class="section-title">Section Title</h2>
+        <p class="section-subtitle">Subtitle · Venue, Year</p>
+      </header>
+      <div class="masonry-grid">
+        <figure class="grid-cell">
+          <img src="images/proj-01.jpg" alt="" />
+        </figure>
+        <figure class="grid-cell">
+          <img src="images/proj-02.jpg" alt="" />
+        </figure>
+        <figure class="grid-cell">
+          <img src="images/proj-03.jpg" alt="" />
+        </figure>
+        <figure class="grid-cell">
+          <img src="images/proj-04.jpg" alt="" />
+        </figure>
+      </div>
+    </section>
 
-    </div>
+    <section class="design-section">
+      <header class="section-header">
+        <h2 class="section-title">Section Title</h2>
+        <p class="section-subtitle">Subtitle · Venue, Year</p>
+      </header>
+      <div class="masonry-grid">
+        <figure class="grid-cell">
+          <img src="images/proj-05.jpg" alt="" />
+        </figure>
+        <figure class="grid-cell">
+          <img src="images/proj-06.jpg" alt="" />
+        </figure>
+        <figure class="grid-cell">
+          <img src="images/proj-07.jpg" alt="" />
+        </figure>
+        <figure class="grid-cell">
+          <img src="images/proj-08.jpg" alt="" />
+        </figure>
+      </div>
+    </section>
+
   </main>
 
   <!-- LIGHTBOX -->
@@ -109,33 +110,16 @@
   </div>
 
   <script>
-    const cells = Array.from(document.querySelectorAll('.grid-cell'));
+    const allCells = Array.from(document.querySelectorAll('.grid-cell'));
     const media = document.getElementById('lightbox-media');
+    let cells = [];     // items in the section currently open
     let current = 0;
+    let sectionTitle = '';
+    let sectionSubtitle = '';
 
-    // Set up each grid item: text overlay, video badge, hover preview, click
-    cells.forEach((cell) => {
-      const title = cell.dataset.title || '';
-      const subtitle = cell.dataset.subtitle || '';
+    // Set up each grid item: video badge, hover preview, click
+    allCells.forEach((cell) => {
       const video = cell.querySelector('video');
-
-      if (title || subtitle) {
-        const info = document.createElement('div');
-        info.className = 'cell-info';
-        if (title) {
-          const t = document.createElement('span');
-          t.className = 'cell-title';
-          t.textContent = title;
-          info.appendChild(t);
-        }
-        if (subtitle) {
-          const s = document.createElement('span');
-          s.className = 'cell-subtitle';
-          s.textContent = subtitle;
-          info.appendChild(s);
-        }
-        cell.appendChild(info);
-      }
 
       if (video || cell.dataset.embed) {
         const badge = document.createElement('span');
@@ -161,8 +145,6 @@
 
     function showItem(i) {
       const cell = cells[i];
-      const title = cell.dataset.title || '';
-      const subtitle = cell.dataset.subtitle || '';
       const video = cell.querySelector('video');
       clearMedia();
 
@@ -173,7 +155,7 @@
         frame.className = 'lightbox-embed';
         frame.allow = 'autoplay; fullscreen; picture-in-picture';
         frame.allowFullscreen = true;
-        frame.title = title;
+        frame.title = sectionTitle;
         media.appendChild(frame);
       } else if (video) {
         const v = document.createElement('video');
@@ -187,18 +169,29 @@
       } else {
         const img = document.createElement('img');
         img.src = cell.querySelector('img').src;
-        img.alt = title;
+        img.alt = cell.querySelector('img').alt || sectionTitle;
         img.className = 'lightbox-img';
         media.appendChild(img);
       }
-
-      document.getElementById('lightbox-title').textContent = title;
-      document.getElementById('lightbox-subtitle').textContent = subtitle;
-      document.getElementById('lightbox-caption').hidden = !(title || subtitle);
     }
 
     function openLightbox(cell) {
+      // Limit the lightbox to the section this item belongs to
+      const section = cell.closest('.design-section');
+      cells = Array.from(section.querySelectorAll('.grid-cell'));
       current = cells.indexOf(cell);
+      sectionTitle = section.querySelector('.section-title')?.textContent.trim() || '';
+      sectionSubtitle = section.querySelector('.section-subtitle')?.textContent.trim() || '';
+
+      document.getElementById('lightbox-title').textContent = sectionTitle;
+      document.getElementById('lightbox-subtitle').textContent = sectionSubtitle;
+      document.getElementById('lightbox-caption').hidden = !(sectionTitle || sectionSubtitle);
+
+      // Hide arrows when a section has only one item
+      const multi = cells.length > 1;
+      document.querySelector('.lightbox-prev').hidden = !multi;
+      document.querySelector('.lightbox-next').hidden = !multi;
+
       const preview = cell.querySelector('video');
       if (preview) preview.pause();
       showItem(current);
@@ -213,6 +206,7 @@
     }
 
     function shiftImage(dir) {
+      if (cells.length < 2) return;
       current = (current + dir + cells.length) % cells.length;
       showItem(current);
     }
