@@ -123,7 +123,7 @@
     </figure>
   </div>
 
-  <script>
+ <script>
     const allCells = Array.from(document.querySelectorAll('.grid-cell'));
     const media = document.getElementById('lightbox-media');
     let cells = [];     // items in the section currently open
@@ -151,6 +151,49 @@
       cell.addEventListener('click', () => openLightbox(cell));
     });
 
+    // Accepts any normal YouTube or Vimeo link and turns it into a playable embed link
+    function toEmbed(raw) {
+      const url = raw.trim();
+      try {
+        const u = new URL(url);
+        const host = u.hostname.replace(/^(www|m)\./, '');
+        let id = '';
+
+        if (host === 'youtu.be') {
+          id = u.pathname.split('/')[1] || '';
+        } else if (host === 'youtube.com' || host === 'youtube-nocookie.com') {
+          if (u.pathname === '/watch') id = u.searchParams.get('v') || '';
+          else {
+            const m = u.pathname.match(/^\/(embed|shorts|live|v)\/([^/]+)/);
+            if (m) id = m[2];
+          }
+        }
+        if (id) {
+          return {
+            embed: 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1',
+            watch: 'https://www.youtube.com/watch?v=' + id,
+            site: 'YouTube'
+          };
+        }
+
+        if (host === 'vimeo.com' || host === 'player.vimeo.com') {
+          const parts = u.pathname.split('/').filter(Boolean);
+          const i = parts.findIndex((p) => /^\d+$/.test(p));
+          if (i >= 0) {
+            const vid = parts[i];
+            const hash = u.searchParams.get('h') ||
+              (parts[i + 1] && /^[0-9a-f]+$/i.test(parts[i + 1]) ? parts[i + 1] : '');
+            return {
+              embed: 'https://player.vimeo.com/video/' + vid + '?autoplay=1' + (hash ? '&h=' + hash : ''),
+              watch: 'https://vimeo.com/' + vid + (hash ? '/' + hash : ''),
+              site: 'Vimeo'
+            };
+          }
+        }
+      } catch (e) {}
+      return { embed: url, watch: url, site: 'the original site' };
+    }
+
     function clearMedia() {
       const v = media.querySelector('video');
       if (v) v.pause();
@@ -163,14 +206,26 @@
       clearMedia();
 
       if (cell.dataset.embed) {
+        const links = toEmbed(cell.dataset.embed);
         const frame = document.createElement('iframe');
-        const url = cell.dataset.embed;
-        frame.src = url + (url.includes('?') ? '&' : '?') + 'autoplay=1';
+        frame.src = links.embed;
         frame.className = 'lightbox-embed';
-        frame.allow = 'autoplay; fullscreen; picture-in-picture';
+        frame.allow = 'autoplay; fullscreen; picture-in-picture; encrypted-media';
         frame.allowFullscreen = true;
+        // YouTube refuses to play ("Error 153") if it can't see which site it's on
+        frame.referrerPolicy = 'strict-origin-when-cross-origin';
         frame.title = sectionTitle;
         media.appendChild(frame);
+
+        // Backup link in case the video's owner has disabled embedding
+        const watch = document.createElement('a');
+        watch.href = links.watch;
+        watch.target = '_blank';
+        watch.rel = 'noopener';
+        watch.textContent = 'Watch on ' + links.site + ' \u2197';
+        watch.className = 'lightbox-subtitle';
+        watch.style.cssText = 'display:block;text-align:center;margin-top:0.75rem;text-decoration:underline;text-underline-offset:3px;';
+        media.appendChild(watch);
       } else if (video) {
         const v = document.createElement('video');
         v.src = video.currentSrc || video.src;
