@@ -22,7 +22,7 @@
     canvas: document.getElementById("rive-canvas"),
     autoplay: true,
     stateMachine: "State Machine 1",   // your exact name
-    autoBind: true,                    // <-- this was missing
+    autoBind: true,
     layout: new rive.Layout({
       fit: rive.Fit.Contain,
       alignment: rive.Alignment.Center
@@ -32,10 +32,6 @@
     }
   });
 
-  window.addEventListener("resize", () => r.resizeDrawingSurfaceToCanvas());
-</script>
-
-  // Keeps the animation sharp and the hover/click areas accurate if the window resizes
   window.addEventListener("resize", () => r.resizeDrawingSurfaceToCanvas());
 </script>
 
