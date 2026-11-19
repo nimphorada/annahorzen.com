@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<canvas id="rive-canvas" width="1500" height="1500" style="width:1500px; height:1500px;"></canvas>
+<canvas id="rive-canvas" width="500" height="500" style="width:500px; height:500px;"></canvas>
 
 <script src="https://unpkg.com/@rive-app/canvas"></script>
 <script>
@@ -19,13 +19,13 @@
     src: "TestFiles/TEST.riv",
     canvas: document.getElementById("rive-canvas"),
     autoplay: true,
-    stateMachines: "State Machine 1",   // your exact name
+    stateMachine: "State Machine 1",   // your exact name
+    autoBind: true,
     onLoad: () => {
       r.resizeDrawingSurfaceToCanvas();
-
-      // Prints every input in the state machine
-      const inputs = r.stateMachineInputs("State Machine 1");
-      console.log("Inputs:", inputs.map(i => i.name + " (type " + i.type + ")"));
+      const vmi = r.viewModelInstance;
+      console.log("View model instance:", vmi);
+      if (vmi) console.log("Properties:", vmi.properties);
     }
   });
 </script>
