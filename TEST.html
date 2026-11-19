@@ -19,10 +19,9 @@
     src: "TestFiles/TEST.riv",
     canvas: document.getElementById("rive-canvas"),
     autoplay: true,
+    stateMachines: "State Machine 1",
     onLoad: () => {
       r.resizeDrawingSurfaceToCanvas();
-      console.log("Animations:", r.animationNames);
-      console.log("State machines:", r.stateMachineNames);
     }
   });
 </script>
