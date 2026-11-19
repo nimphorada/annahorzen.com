@@ -11,6 +11,17 @@
 </head>
 <body>
 
+<canvas id="rive-canvas" width="500" height="500"></canvas>
+
+<script src="https://unpkg.com/@rive-app/canvas"></script>
+<script>
+  const r = new rive.Rive({
+    src: "TEST.riv",
+    canvas: document.getElementById("rive-canvas"),
+    autoplay: true
+  });
+</script>
+
   <header class="site-header">
     <a href="index.html" class="wordmark">Anna Horzen</a>
     <nav class="site-nav">
