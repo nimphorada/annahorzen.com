@@ -12,7 +12,7 @@
 <body>
 
 <canvas id="rive-canvas"
-  style="display:block; margin:0 auto; width:min(90vw, 70vh); height:min(90vw, 90vh);">
+  style="display:block; margin:0 auto; width:min(90vw, 90vh); height:min(90vw, 90vh);">
 </canvas>
 
 <script src="https://unpkg.com/@rive-app/canvas"></script>
@@ -22,6 +22,7 @@
     canvas: document.getElementById("rive-canvas"),
     autoplay: true,
     stateMachine: "State Machine 1",   // your exact name
+    autoBind: true,                    // <-- this was missing
     layout: new rive.Layout({
       fit: rive.Fit.Contain,
       alignment: rive.Alignment.Center
@@ -30,6 +31,9 @@
       r.resizeDrawingSurfaceToCanvas();
     }
   });
+
+  window.addEventListener("resize", () => r.resizeDrawingSurfaceToCanvas());
+</script>
 
   // Keeps the animation sharp and the hover/click areas accurate if the window resizes
   window.addEventListener("resize", () => r.resizeDrawingSurfaceToCanvas());
