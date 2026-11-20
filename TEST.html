@@ -12,8 +12,13 @@
 <body>
 
 <style>
-  html, body { margin: 0; padding: 50px, 0, 0, 0; height: 100%; background: #000; }
-  #rive-canvas { display: block; width: 100vw; height: 100vh; }
+  html, body { margin: 0; padding: 0; height: 100%; background: #000; }
+  #rive-canvas {
+    display: block;
+    width: 100vw;
+    height: calc(100vh - 50px);
+    margin-top: 50px;
+  }
 </style>
 
 <canvas id="rive-canvas"></canvas>
