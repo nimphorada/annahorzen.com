@@ -1,0 +1,129 @@
+/* ===================================================
+   PROJECT PAGE — project.css
+   Load AFTER style.css. Adds only what the project
+   template needs; reuses .section-header, .section-title,
+   .section-subtitle, .masonry-grid, .grid-cell, .lightbox
+   and .bio-link from style.css.
+   =================================================== */
+
+/* --- INTRO (title + subtitle) --------------------- */
+.project-intro .section-title {
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+}
+
+/* --- TEXT BLOCK ----------------------------------- */
+.project-text {
+  max-width: 46rem;
+  padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.25rem, 4vw, 2.5rem) clamp(3rem, 8vw, 6rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 4vw, 3rem);
+}
+
+/* Body copy */
+.project-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.project-body p {
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  font-weight: 300;
+  line-height: 1.8;
+  color: #ccc;
+}
+.project-body strong { font-weight: 400; color: var(--text); }
+.project-body em { font-style: italic; }
+
+/* Sub-heading inside the text block */
+.project-subheading {
+  font-family: var(--font-serif);
+  font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+/* Large quote used as a standalone heading */
+.project-quote-heading {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+/* Pull quotes with attribution */
+.project-quotes {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.project-pullquote {
+  border-left: 1px solid var(--accent-dim);
+  padding-left: clamp(1rem, 2.5vw, 1.75rem);
+}
+.project-pullquote p {
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--text);
+}
+.project-pullquote cite {
+  display: block;
+  margin-top: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-style: normal;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  line-height: 1.7;
+  color: var(--accent);
+}
+
+/* Credits: role on the left, name on the right */
+.project-credits {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: clamp(1.5rem, 4vw, 3rem);
+  row-gap: 0.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+.project-credits dt {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  line-height: 1.9;
+  color: var(--text-dim);
+}
+.project-credits dd {
+  font-size: 1.1rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+/* Small acknowledgement lines under the credits */
+.project-note {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  line-height: 1.9;
+  color: var(--text-dim);
+}
+
+/* --- RESPONSIVE ----------------------------------- */
+@media (max-width: 480px) {
+  .project-credits {
+    grid-template-columns: 1fr;
+    row-gap: 0;
+  }
+  .project-credits dd { margin-bottom: 0.75rem; }
+}
