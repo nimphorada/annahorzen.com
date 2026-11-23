@@ -146,7 +146,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 }
 
 .about-img {
-  width: 70%;          /* scale here: 60% = smaller, 80% = larger */
+  width: 100%;          /* scale here: 60% = smaller, 80% = larger */
   height: auto;
   max-height: 100%;
   object-fit: contain;
