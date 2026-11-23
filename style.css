@@ -140,12 +140,16 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   overflow: hidden;
   background: #0a0a0a;
   max-height: calc(100svh - var(--nav-h));
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .about-img {
-  width: 70%;
-  height: 70%;
-  object-fit: cover;
+  width: 70%;          /* scale here: 60% = smaller, 80% = larger */
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
   filter: grayscale(20%);
 }
 
