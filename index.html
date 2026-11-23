@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Design — Anna Horzen</title>
+  <title>Photography — Anna Horzen</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
@@ -11,305 +11,78 @@
 </head>
 <body>
 
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; background: #000; }
+  #rive-canvas {
+    display: block;
+    width: 100vw;
+    height: calc(100vh - 50px);
+    margin-top: 50px;
+  }
+</style>
+
+<canvas id="rive-canvas"></canvas>
+
+<script src="https://unpkg.com/@rive-app/webgl2"></script>
+<script>
+  const r = new rive.Rive({
+    src: "TestFiles/TEST.riv?v=7",
+    canvas: document.getElementById("rive-canvas"),
+    autoplay: true,
+    stateMachine: "State Machine 1",   // your exact name
+    autoBind: true,
+    automaticallyHandleEvents: true,
+    layout: new rive.Layout({
+      fit: rive.Fit.Contain,
+      alignment: rive.Alignment.Center
+    }),
+    onLoad: () => {
+      r.resizeDrawingSurfaceToCanvas();
+    }
+  });
+
+  window.addEventListener("resize", () => r.resizeDrawingSurfaceToCanvas());
+</script>
+
   <header class="site-header">
     <a href="index.html" class="wordmark">Anna Horzen</a>
     <nav class="site-nav">
-      <a href="index.html" class="nav-link nav-link--active">Design</a>
-      <a href="photography.html" class="nav-link">Photography</a>
+      <a href="index.html" class="nav-link">Design</a>
+      <a href="photography.html" class="nav-link nav-link--active">Photography</a>
       <a href="about.html" class="nav-link">About</a>
     </nav>
   </header>
 
-  <main class="grid-main design-main">
 
-    <!--
-      HOW THIS PAGE WORKS
-      The page is a stack of sections. Each section = a title, a subtitle, then a grid of photos/videos.
-      To add a section, copy everything from <section class="design-section"> to </section>
-      and paste it where you want it. Sections appear in the order they're written.
-      In the lightbox, the arrows move through the items in that section only.
 
-      ITEMS YOU CAN PUT IN A SECTION'S GRID:
-
-      PHOTO:
-        <figure class="grid-cell">
-          <img src="images/your-image.jpg" alt="" />
-        </figure>
-
-      VIDEO FILE (stored in your repo, MP4). Plays silently on hover; opens with sound.
-      The poster is the still frame shown before it plays. Always include one.
-        <figure class="grid-cell">
-          <video src="videos/your-video.mp4" poster="images/your-video-poster.jpg"
-                 muted loop playsinline preload="metadata"></video>
-        </figure>
-
-      VIMEO / YOUTUBE. The image is the thumbnail shown in the grid.
-        Vimeo:   data-embed="https://player.vimeo.com/video/123456789"
-        YouTube: data-embed="https://www.youtube.com/embed/VIDEO_ID"
-        <figure class="grid-cell" data-embed="https://player.vimeo.com/video/123456789">
-          <img src="images/your-thumbnail.jpg" alt="" />
-        </figure>
-    -->
-    <section class="design-section">
-      <header class="section-header">
-        <h2 class="section-title">Food Fight</h2>
-        <p class="section-subtitle">PX DESIGNER · Arts + Business Council's Big Night, Studio 615, 2026</p>
-      </header>
-      <div class="masonry-grid">
-        <figure class="grid-cell" data-embed="https://youtu.be/wSJceJPIO2w">
-          <img src="images/proj-11.jpg" alt="" />
-        </figure>
-        <figure class="grid-cell" data-embed="https://youtu.be/ID4dqfZy4xE">
-          <img src="images/proj-12.jpg" alt="" />
-        </figure>
-        <figure class="grid-cell">
-          <img src="images/proj-15.jpg" alt="" />
-        </figure>
-      </div>
-    </section>
-
-    
-    <section class="design-section">
-      <header class="section-header">
-        <h2 class="section-title">I'm Connecticut</h2>
-        <p class="section-subtitle">ASST. PX DESIGNER · Ivoryton Playhouse, 2026</p>
-      </header>
-      <div class="masonry-grid">
-        <figure class="grid-cell" data-embed="https://youtu.be/5joVSzdfHQ8">
-          <img src="images/proj-10.png" alt="" />
-        </figure>
-        <figure class="grid-cell">
-          <img src="images/proj-09.jpg" alt="" />
-        </figure>
-      </div>
-    </section>
-
-    <section class="design-section">
-      <header class="section-header">
-        <h2 class="section-title">I Saw Goody Proctor with the Devil</h2>
-        <p class="section-subtitle">PX DESIGNER · Kindling Arts Festival, 2025</p>
-      </header>
-      <div class="masonry-grid">
-        <figure class="grid-cell" data-embed="https://youtu.be/dICOn7AhiaA">
-          <img src="images/proj-01.jpg" alt="" />
-        </figure>
-        <figure class="grid-cell">
-          <img src="images/proj-02.jpg" alt="" />
-        </figure>
-        <figure class="grid-cell">
-          <img src="images/proj-03.jpg" alt="" />
-        </figure>
-        <figure class="grid-cell">
-          <img src="images/proj-04.jpg" alt="" />
-        </figure>
-        <figure class="grid-cell">
-          <img src="images/proj-05.jpg" alt="" />
-        </figure>
-        </figure>
-        <figure class="grid-cell">
-          <img src="images/proj-07.jpg" alt="" />
-        </figure>
-      </div>
-    </section>
-
-    <section class="design-section">
-      <header class="section-header">
-        <h2 class="section-title">Here Be Sirens</h2>
-        <p class="section-subtitle">LX DESIGNER & PROGRAMMER · Dyer Observatory, 2023</p>
-      </header>
-      <div class="masonry-grid">
-        <figure class="grid-cell">
-          <img src="images/proj-13.png" alt="" />
-        </figure>
-        <figure class="grid-cell">
-          <img src="images/proj-14.png" alt="" />
-        </figure>
-        <figure class="grid-cell">
-          <img src="images/proj-15.png" alt="" />
-        </figure>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- LIGHTBOX -->
-  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-    <button class="lightbox-close" onclick="closeLightbox()">×</button>
-    <button class="lightbox-prev" onclick="event.stopPropagation(); shiftImage(-1)">&#8592;</button>
-    <button class="lightbox-next" onclick="event.stopPropagation(); shiftImage(1)">&#8594;</button>
-    <figure class="lightbox-figure" onclick="event.stopPropagation()">
-      <div class="lightbox-media" id="lightbox-media"></div>
-      <figcaption class="lightbox-caption" id="lightbox-caption">
-        <span class="lightbox-title" id="lightbox-title"></span>
-        <span class="lightbox-subtitle" id="lightbox-subtitle"></span>
-      </figcaption>
-    </figure>
-  </div>
-
- <script>
-    const allCells = Array.from(document.querySelectorAll('.grid-cell'));
-    const media = document.getElementById('lightbox-media');
-    let cells = [];     // items in the section currently open
+  <script>
+    const cells = Array.from(document.querySelectorAll('.grid-cell'));
     let current = 0;
-    let sectionTitle = '';
-    let sectionSubtitle = '';
 
-    // Set up each grid item: video badge, hover preview, click
-    allCells.forEach((cell) => {
-      const video = cell.querySelector('video');
-
-      if (video || cell.dataset.embed) {
-        const badge = document.createElement('span');
-        badge.className = 'play-badge';
-        badge.textContent = '▶';
-        cell.appendChild(badge);
-      }
-
-      if (video) {
-        video.muted = true;
-        cell.addEventListener('mouseenter', () => video.play().catch(() => {}));
-        cell.addEventListener('mouseleave', () => video.pause());
-      }
-
-      cell.addEventListener('click', () => openLightbox(cell));
-    });
-
-    // Accepts any normal YouTube or Vimeo link and turns it into a playable embed link
-    function toEmbed(raw) {
-      const url = raw.trim();
-      try {
-        const u = new URL(url);
-        const host = u.hostname.replace(/^(www|m)\./, '');
-        let id = '';
-
-        if (host === 'youtu.be') {
-          id = u.pathname.split('/')[1] || '';
-        } else if (host === 'youtube.com' || host === 'youtube-nocookie.com') {
-          if (u.pathname === '/watch') id = u.searchParams.get('v') || '';
-          else {
-            const m = u.pathname.match(/^\/(embed|shorts|live|v)\/([^/]+)/);
-            if (m) id = m[2];
-          }
-        }
-        if (id) {
-          return {
-            embed: 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1',
-            watch: 'https://www.youtube.com/watch?v=' + id,
-            site: 'YouTube'
-          };
-        }
-
-        if (host === 'vimeo.com' || host === 'player.vimeo.com') {
-          const parts = u.pathname.split('/').filter(Boolean);
-          const i = parts.findIndex((p) => /^\d+$/.test(p));
-          if (i >= 0) {
-            const vid = parts[i];
-            const hash = u.searchParams.get('h') ||
-              (parts[i + 1] && /^[0-9a-f]+$/i.test(parts[i + 1]) ? parts[i + 1] : '');
-            return {
-              embed: 'https://player.vimeo.com/video/' + vid + '?autoplay=1' + (hash ? '&h=' + hash : ''),
-              watch: 'https://vimeo.com/' + vid + (hash ? '/' + hash : ''),
-              site: 'Vimeo'
-            };
-          }
-        }
-      } catch (e) {}
-      return { embed: url, watch: url, site: 'the original site' };
-    }
-
-    function clearMedia() {
-      const v = media.querySelector('video');
-      if (v) v.pause();
-      media.innerHTML = '';
-    }
-
-    function showItem(i) {
-      const cell = cells[i];
-      const video = cell.querySelector('video');
-      clearMedia();
-
-      if (cell.dataset.embed) {
-        const links = toEmbed(cell.dataset.embed);
-        const frame = document.createElement('iframe');
-        frame.src = links.embed;
-        frame.className = 'lightbox-embed';
-        frame.allow = 'autoplay; fullscreen; picture-in-picture; encrypted-media';
-        frame.allowFullscreen = true;
-        // YouTube refuses to play ("Error 153") if it can't see which site it's on
-        frame.referrerPolicy = 'strict-origin-when-cross-origin';
-        frame.title = sectionTitle;
-        media.appendChild(frame);
-
-        // Backup link in case the video's owner has disabled embedding
-        const watch = document.createElement('a');
-        watch.href = links.watch;
-        watch.target = '_blank';
-        watch.rel = 'noopener';
-        watch.textContent = 'Watch on ' + links.site + ' \u2197';
-        watch.className = 'lightbox-subtitle';
-        watch.style.cssText = 'display:block;text-align:center;margin-top:0.75rem;text-decoration:underline;text-underline-offset:3px;';
-        media.appendChild(watch);
-      } else if (video) {
-        const v = document.createElement('video');
-        v.src = video.currentSrc || video.src;
-        if (video.poster) v.poster = video.poster;
-        v.className = 'lightbox-img';
-        v.controls = true;
-        v.autoplay = true;
-        v.playsInline = true;
-        media.appendChild(v);
-      } else {
-        const img = document.createElement('img');
-        img.src = cell.querySelector('img').src;
-        img.alt = cell.querySelector('img').alt || sectionTitle;
-        img.className = 'lightbox-img';
-        media.appendChild(img);
-      }
-    }
-
-    function openLightbox(cell) {
-      // Limit the lightbox to the section this item belongs to
-      const section = cell.closest('.design-section');
-      cells = Array.from(section.querySelectorAll('.grid-cell'));
-      current = cells.indexOf(cell);
-      sectionTitle = section.querySelector('.section-title')?.textContent.trim() || '';
-      sectionSubtitle = section.querySelector('.section-subtitle')?.textContent.trim() || '';
-
-      document.getElementById('lightbox-title').textContent = sectionTitle;
-      document.getElementById('lightbox-subtitle').textContent = sectionSubtitle;
-      document.getElementById('lightbox-caption').hidden = !(sectionTitle || sectionSubtitle);
-
-      // Hide arrows when a section has only one item
-      const multi = cells.length > 1;
-      document.querySelector('.lightbox-prev').hidden = !multi;
-      document.querySelector('.lightbox-next').hidden = !multi;
-
-      const preview = cell.querySelector('video');
-      if (preview) preview.pause();
-      showItem(current);
+    function openLightbox(el) {
+      current = cells.indexOf(el);
+      const src = el.querySelector('img').src;
+      document.getElementById('lightbox-img').src = src;
       document.getElementById('lightbox').classList.add('active');
       document.body.style.overflow = 'hidden';
     }
 
     function closeLightbox() {
-      clearMedia();
       document.getElementById('lightbox').classList.remove('active');
       document.body.style.overflow = '';
     }
 
     function shiftImage(dir) {
-      if (cells.length < 2) return;
       current = (current + dir + cells.length) % cells.length;
-      showItem(current);
+      document.getElementById('lightbox-img').src = cells[current].querySelector('img').src;
     }
 
     document.addEventListener('keydown', (e) => {
-      if (!document.getElementById('lightbox').classList.contains('active')) return;
       if (e.key === 'Escape') closeLightbox();
       if (e.key === 'ArrowRight') shiftImage(1);
       if (e.key === 'ArrowLeft') shiftImage(-1);
     });
   </script>
-
+<script src="/assets/js/external-links.js"></script>
 </body>
 </html>
