@@ -148,6 +148,16 @@
       startRive();                       // starts it if a narrow window was widened
       if (r) r.resizeDrawingSurfaceToCanvas();
     });
+
+    // Shut Rive down when leaving the page, and restart it fresh if the
+    // browser restores the page from its back/forward cache (Back button).
+    window.addEventListener("pagehide", () => {
+      if (r) { r.cleanup(); r = null; }
+    });
+
+    window.addEventListener("pageshow", (e) => {
+      if (e.persisted) startRive();
+    });
   </script>
   <script src="/assets/js/external-links.js"></script>
 </body>
