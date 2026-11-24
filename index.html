@@ -3,46 +3,72 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Photography — Anna Horzen</title>
+  <title>Design — Anna Horzen</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; background: #000; }
+
+    /* ---------- DESKTOP / TABLET: Rive animation ---------- */
+    #rive-canvas {
+      display: block;
+      width: 100vw;
+      height: calc(100vh - 50px);
+      margin-top: 50px;
+    }
+
+    /* ---------- PHONE: tappable image list ---------- */
+    .mobile-home { display: none; }
+
+    @media (max-width: 600px) {
+      html, body { height: auto; }
+      #rive-canvas { display: none; }
+
+      .mobile-home {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(1.75rem, 8vw, 2.5rem);
+        padding: calc(var(--nav-h) + 1.25rem) 1.25rem 3rem;
+      }
+
+      .mobile-card {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+      }
+
+      .mobile-card-img {
+        display: block;
+        overflow: hidden;
+        background: #0a0a0a;
+      }
+      .mobile-card-img img {
+        width: 100%;
+        height: auto;          /* keeps each image's natural proportions */
+        opacity: 0.92;
+        transition: opacity 0.3s ease;
+      }
+
+      .mobile-card-title {
+        font-family: var(--font-serif);
+        font-size: 1.5rem;
+        font-weight: 300;
+        font-style: italic;
+        line-height: 1.2;
+        color: var(--text);
+      }
+
+      .mobile-card:active .mobile-card-img img,
+      .mobile-card:focus-visible .mobile-card-img img { opacity: 1; }
+      .mobile-card:active .mobile-card-title,
+      .mobile-card:focus-visible .mobile-card-title { color: var(--accent); }
+      .mobile-card:focus-visible { outline: 1px solid var(--accent); outline-offset: 4px; }
+    }
+  </style>
 </head>
 <body>
-
-<style>
-  html, body { margin: 0; padding: 0; height: 100%; background: #000; }
-  #rive-canvas {
-    display: block;
-    width: 100vw;
-    height: calc(100vh - 50px);
-    margin-top: 50px;
-  }
-</style>
-
-<canvas id="rive-canvas"></canvas>
-
-<script src="https://unpkg.com/@rive-app/webgl2"></script>
-<script>
-  const r = new rive.Rive({
-    src: "TestFiles/TEST.riv?v=10",
-    canvas: document.getElementById("rive-canvas"),
-    autoplay: true,
-    stateMachine: "State Machine 1",   // your exact name
-    autoBind: true,
-    automaticallyHandleEvents: true,
-    layout: new rive.Layout({
-      fit: rive.Fit.Contain,
-      alignment: rive.Alignment.Center
-    }),
-    onLoad: () => {
-      r.resizeDrawingSurfaceToCanvas();
-    }
-  });
-
-  window.addEventListener("resize", () => r.resizeDrawingSurfaceToCanvas());
-</script>
 
   <header class="site-header">
     <a href="index.html" class="wordmark">Anna Horzen</a>
@@ -53,36 +79,76 @@
     </nav>
   </header>
 
+  <!-- DESKTOP / TABLET -->
+  <canvas id="rive-canvas"></canvas>
 
+  <!-- PHONE
+       One <a class="mobile-card"> per image in the Rive file.
+       To add one: copy a block, then change the page link, image and title.
+       The title sits below the image. To put it above, move the
+       <span class="mobile-card-title"> line above the <span class="mobile-card-img"> block. -->
+  <main class="mobile-home">
 
+    <a class="mobile-card" href="FoodFight.html">
+      <span class="mobile-card-img">
+        <img src="images/FoodFight-04.png" alt="Food Fight" loading="lazy" />
+      </span>
+      <span class="mobile-card-title">Food Fight</span>
+    </a>
+
+    <a class="mobile-card" href="ImConnecticut.html">
+      <span class="mobile-card-img">
+        <img src="images/ImConnecticut-01.jpg" alt="I’m Connecticut" loading="lazy" />
+      </span>
+      <span class="mobile-card-title">I&rsquo;m Connecticut</span>
+    </a>
+
+    <a class="mobile-card" href="ISGPWTD.html">
+      <span class="mobile-card-img">
+        <img src="images/ISGPWTD-06.jpg" alt="I Saw Goody Proctor with the Devil" loading="lazy" />
+      </span>
+      <span class="mobile-card-title">I Saw Goody Proctor with the Devil</span>
+    </a>
+
+    <a class="mobile-card" href="HereBeSirens.html">
+      <span class="mobile-card-img">
+        <img src="images/HereBeSirens-03.jpeg" alt="Here Be Sirens" loading="lazy" />
+      </span>
+      <span class="mobile-card-title">Here Be Sirens</span>
+    </a>
+
+  </main>
+
+  <script src="https://unpkg.com/@rive-app/webgl2"></script>
   <script>
-    const cells = Array.from(document.querySelectorAll('.grid-cell'));
-    let current = 0;
+    // Only load the Rive animation on wider screens, so phones skip it entirely.
+    const wideScreen = window.matchMedia('(min-width: 601px)');
+    let r = null;
 
-    function openLightbox(el) {
-      current = cells.indexOf(el);
-      const src = el.querySelector('img').src;
-      document.getElementById('lightbox-img').src = src;
-      document.getElementById('lightbox').classList.add('active');
-      document.body.style.overflow = 'hidden';
+    function startRive() {
+      if (r || !wideScreen.matches) return;
+      r = new rive.Rive({
+        src: "TestFiles/TEST.riv?v=10",
+        canvas: document.getElementById("rive-canvas"),
+        autoplay: true,
+        stateMachine: "State Machine 1",
+        autoBind: true,
+        automaticallyHandleEvents: true,
+        layout: new rive.Layout({
+          fit: rive.Fit.Contain,
+          alignment: rive.Alignment.Center
+        }),
+        onLoad: () => r.resizeDrawingSurfaceToCanvas()
+      });
     }
 
-    function closeLightbox() {
-      document.getElementById('lightbox').classList.remove('active');
-      document.body.style.overflow = '';
-    }
+    startRive();
 
-    function shiftImage(dir) {
-      current = (current + dir + cells.length) % cells.length;
-      document.getElementById('lightbox-img').src = cells[current].querySelector('img').src;
-    }
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowRight') shiftImage(1);
-      if (e.key === 'ArrowLeft') shiftImage(-1);
+    window.addEventListener("resize", () => {
+      startRive();                       // starts it if a narrow window was widened
+      if (r) r.resizeDrawingSurfaceToCanvas();
     });
   </script>
-<script src="/assets/js/external-links.js"></script>
+  <script src="/assets/js/external-links.js"></script>
 </body>
 </html>
